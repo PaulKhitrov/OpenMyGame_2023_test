@@ -16,6 +16,7 @@ namespace App.Scripts.Scenes.SceneFillwords.Installers
             container.SetService<IServiceLevelSelection, ServiceLevelSelection>(
                 new ServiceLevelSelection(configLevelSelection));
             container.SetService<IProviderFillwordLevel, ProviderFillwordLevel>(new ProviderFillwordLevel());
+            
 
             container.SetServiceSelf(new ContainerGrid());
         }
