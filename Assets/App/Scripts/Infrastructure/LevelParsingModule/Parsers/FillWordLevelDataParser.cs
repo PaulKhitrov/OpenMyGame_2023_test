@@ -14,7 +14,7 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
         private Dictionary<int, List<int>> _levels_WordsNumber_Dictionary = new Dictionary<int, List<int>>();
         private Dictionary<int, List<char>> _wordsNumber_letters_Dictionary = new Dictionary<int, List<char>>();
         private Dictionary<int, List<int>> _wordsNumber_LettersPosition_Dict = new Dictionary<int, List<int>>();
-        private List<FillWordLevelModel> _levelModelsList;
+        private List<FillWordParserLevelModel> _levelModelsList;
 
         public FillWordLevelDataParser()
         {
@@ -24,7 +24,7 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
         public void InitParser()
         {
             PrepareLoadedData();
-            _levelModelsList = new List<FillWordLevelModel>(GetLevelModelsList());
+            _levelModelsList = new List<FillWordParserLevelModel>(GetLevelModelsList());
             _levelModelsList = ValidateLevelModelsList(_levelModelsList);
         }
 
@@ -35,8 +35,10 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
             Dictionary<int, string> wordsLoadDictionary = new Dictionary<int, string>();
 
             char s = Path.DirectorySeparatorChar;
-            string levelsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "pack_0.txt";
-            string wordsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "words_list.txt";
+            //string levelsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "pack_0.txt";
+            //string wordsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "words_list.txt";
+            string levelsFile = Path.Combine(Application.dataPath, "App", "Resources", "Fillwords", "pack_0.txt");
+            string wordsFile = Path.Combine(Application.dataPath, "App", "Resources", "Fillwords", "words_list.txt");
 
             string[] lvlloadData = LoadDataFromFille(levelsFile);
             string[] wordsLoadData = LoadDataFromFille(wordsFile);
@@ -136,7 +138,7 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
             }
         }
 
-        private FillWordLevelModel GenerateLevelModel(int levelIndex)
+        private FillWordParserLevelModel GenerateLevelModel(int levelIndex)
         {
             List<int> wordsNum = new List<int>(_levels_WordsNumber_Dictionary[levelIndex]);
             List<int> positionsList = new List<int>();
@@ -156,12 +158,12 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
 
             int sizeGrid = Convert.ToInt32(Math.Sqrt(Convert.ToDouble(levelGridLettersList.Count)));
 
-            return new FillWordLevelModel(levelIndex, new Vector2Int(sizeGrid, sizeGrid), levelGridLettersList);
+            return new FillWordParserLevelModel(levelIndex, new Vector2Int(sizeGrid, sizeGrid), levelGridLettersList);
         }
 
-        private List<FillWordLevelModel> GetLevelModelsList()
+        private List<FillWordParserLevelModel> GetLevelModelsList()
         {
-            List<FillWordLevelModel> levelsList = new List<FillWordLevelModel>();
+            List<FillWordParserLevelModel> levelsList = new List<FillWordParserLevelModel>();
 
             foreach (var key in _levels_WordsNumber_Dictionary.Keys)
             {
@@ -171,9 +173,9 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
             return levelsList;
         }
 
-        private List<FillWordLevelModel> ValidateLevelModelsList(List<FillWordLevelModel> levelModelsList)
+        private List<FillWordParserLevelModel> ValidateLevelModelsList(List<FillWordParserLevelModel> levelModelsList)
         {
-            List<FillWordLevelModel> newlevelModelsList = new List<FillWordLevelModel>();
+            List<FillWordParserLevelModel> newlevelModelsList = new List<FillWordParserLevelModel>();
 
             for (int i = levelModelsList.Count - 1; i >= 0; i--)
             {
@@ -186,14 +188,14 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
             int newlvlIndex = 1;
             foreach (var item in levelModelsList)
             {
-                newlevelModelsList.Add(new FillWordLevelModel(newlvlIndex, item.SizeGrid, item.Letters.ToList()));
+                newlevelModelsList.Add(new FillWordParserLevelModel(newlvlIndex, item.SizeGrid, item.Letters.ToList()));
                 newlvlIndex++;
             }
 
             return newlevelModelsList;
         }
 
-        public FillWordLevelModel GetFillWordlevel(int levelIndex)
+        public FillWordParserLevelModel GetFillWordlevel(int levelIndex)
         {
             if (_levelModelsList.Exists(lvl => lvl.LevelIndex == levelIndex))
             {

@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace App.Scripts.Infrastructure.LevelParsingModule.Models
 {
-    public class FillWordLevelModel
+    public class FillWordParserLevelModel
     {
         private readonly int _levelIndex;
         private readonly List<char> _letters;
         private readonly Vector2Int _sizeGrid;
 
-        public FillWordLevelModel(int levelIndex, Vector2Int sizeGrid, List<char> lettersForGrid)
+        public FillWordParserLevelModel(int levelIndex, Vector2Int sizeGrid, List<char> lettersForGrid)
         {
             _levelIndex = levelIndex;
             _letters = new List<char>(lettersForGrid);
