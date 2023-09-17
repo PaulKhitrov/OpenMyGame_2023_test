@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.Libs.Factory;
 using App.Scripts.Scenes.SceneWordSearch.Features.Level.Models.Level;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 {
@@ -22,7 +24,51 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
         private List<char> BuildListChars(List<string> words)
         {
             //напиши реализацию не меняя сигнатуру функции
-            throw new NotImplementedException();
+            List<char> chars = new List<char>() { 'е', 'л', 'ь', 'с', 'щ' };
+            List<char> allLetters = new List<char>();
+            Dictionary<int, List<char>> wordsForLetters = new Dictionary<int, List<char>>();
+            List<char> charsForButtons = new List<char>();
+
+
+            foreach (var item in words)
+            {
+                allLetters = allLetters.Concat(item.ToCharArray()).ToList();
+            }
+
+            allLetters = allLetters.Distinct().ToList(); //удаляем повторы
+
+            int key = 0;
+            foreach (var item in words)
+            {
+                wordsForLetters.Add(key, item.ToCharArray().ToList());
+                key++;
+            }
+
+            int currentCount = 0;
+            int maxCount = 0;
+            char currentChar;
+            Dictionary<int, char> numberOfLetterButtons = new Dictionary<int, char>();
+            List<int> maxLetterCount = new List<int>();
+
+            foreach (var letterForCheck in allLetters)
+            {
+                foreach (var word in wordsForLetters.Values)
+                {
+                    currentCount = word.Where(x => x.Equals(letterForCheck)).Count();
+                    maxLetterCount.Add(currentCount);
+                    currentCount = 0;
+                }
+                maxCount = maxLetterCount.Max();
+                currentChar = letterForCheck;
+
+                for (int i = 1; i <= maxCount; i++)
+                {
+                    charsForButtons.Add(currentChar);
+                }
+                maxCount = 0;
+                maxLetterCount.Clear();
+            }
+            return charsForButtons;
         }
     }
 }
