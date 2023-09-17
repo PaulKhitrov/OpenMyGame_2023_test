@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Libs.Factory;
 using App.Scripts.Scenes.SceneWordSearch.Features.Level.Models.Level;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
 {
@@ -24,7 +22,6 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
         private List<char> BuildListChars(List<string> words)
         {
             //напиши реализацию не меняя сигнатуру функции
-            List<char> chars = new List<char>() { 'е', 'л', 'ь', 'с', 'щ' };
             List<char> allLetters = new List<char>();
             Dictionary<int, List<char>> wordsForLetters = new Dictionary<int, List<char>>();
             List<char> charsForButtons = new List<char>();
@@ -35,7 +32,7 @@ namespace App.Scripts.Scenes.SceneWordSearch.Features.Level.BuilderLevelModel
                 allLetters = allLetters.Concat(item.ToCharArray()).ToList();
             }
 
-            allLetters = allLetters.Distinct().ToList(); //удаляем повторы
+            allLetters = allLetters.Distinct().ToList();
 
             int key = 0;
             foreach (var item in words)

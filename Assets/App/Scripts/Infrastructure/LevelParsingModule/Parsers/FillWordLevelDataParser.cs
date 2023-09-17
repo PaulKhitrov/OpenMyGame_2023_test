@@ -35,15 +35,13 @@ namespace App.Scripts.Infrastructure.LevelParsingModule.Parsers
             Dictionary<int, string> wordsLoadDictionary = new Dictionary<int, string>();
 
             char s = Path.DirectorySeparatorChar;
-            //string levelsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "pack_0.txt";
-            //string wordsFile = Application.dataPath + s + "App" + s + "Resources" + s + "Fillwords" + s + "words_list.txt";
             string levelsFile = Path.Combine(Application.dataPath, "App", "Resources", "Fillwords", "pack_0.txt");
             string wordsFile = Path.Combine(Application.dataPath, "App", "Resources", "Fillwords", "words_list.txt");
 
             string[] lvlloadData = LoadDataFromFille(levelsFile);
             string[] wordsLoadData = LoadDataFromFille(wordsFile);
 
-            lvlloadData = lvlloadData.Distinct().ToArray(); //удаляем повторяющиеся строки
+            lvlloadData = lvlloadData.Distinct().ToArray(); 
 
             for (int i = 0; i < lvlloadData.Length; i++)
             {
